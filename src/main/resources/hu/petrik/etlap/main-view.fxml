@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.petrik.etlap.controllers.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <HBox minHeight="30.0" prefHeight="30.0" spacing="10.0">
+      <children>
+         <Button maxWidth="112.0" minWidth="100.0" mnemonicParsing="false" onAction="#onHozzadasButtonClick" prefHeight="26.0" prefWidth="112.0" text="Új étel felvétele" />
+         <Button maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#onTorlesButtonClick" prefWidth="100.0" text="Törlés" />
+      </children>
+   </HBox>
+    <TitledPane animated="false" text="untitled">
+        <content>
+            <VBox>
+                <children>
+                    <HBox spacing="5.0">
+                        <children>
+                            <Spinner fx:id="szazalekSpinner">
+                                <valueFactory>
+                                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="5" initialValue="5" max="50" min="5" />
+                                </valueFactory>
+                            </Spinner>
+                            <Label text="\%">
+                                <HBox.margin>
+                                    <Insets />
+                                </HBox.margin>
+                            </Label>
+                            <Button onAction="#szazalekOnClick" text="Emelés"></Button>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="20.0" />
+                        </VBox.margin>
+                    </HBox>
+                    <HBox spacing="5.0">
+                        <children>
+                            <Spinner fx:id="forintSpinner">
+                                <valueFactory>
+                                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="50" initialValue="50" max="3000" min="50" />
+                                </valueFactory>
+                            </Spinner>
+                            <Label text="Ft"></Label>
+                            <Button mnemonicParsing="false" onAction="#forintOnClick" text="Emelés"></Button>
+                        </children>
+                    </HBox>
+                </children>
+            </VBox>
+        </content>
+    </TitledPane>
+   <TableView fx:id="etlapTable" minHeight="0.0" prefHeight="473.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+     <columns>
+         <TableColumn fx:id="nev" minWidth="50.0" prefWidth="250.0" text="Név" />
+         <TableColumn fx:id="kategoria" minWidth="50.0" prefWidth="150.0" text="Kategória" />
+         <TableColumn fx:id="ar" minWidth="50.0" prefWidth="100.0" text="Ár(Ft)" />
+     </columns>
+   </TableView>
+</VBox>

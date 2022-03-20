@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.petrik.etlap.controllers.HozzadController">
+   <columnConstraints>
+      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="200.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <TextField fx:id="inputNev" promptText="Név" GridPane.columnIndex="1" />
+      <Label text="Név" />
+      <Label text="Leírás" GridPane.rowIndex="1" />
+      <Label text="Kategória" GridPane.rowIndex="2" />
+      <Label text="Ár" GridPane.rowIndex="3" />
+      <TextField fx:id="inputLeiras" promptText="Kategória" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="inputKategoria" minWidth="100.0" prefWidth="200.0" value="5" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="előétel" />
+               <String fx:value="főétel" />
+               <String fx:value="desszert" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <Spinner fx:id="inputAr" editable="true" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+         <valueFactory>
+            <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="10" initialValue="100" max="999" min="1" />
+         </valueFactory>
+      </Spinner>
+
+      <Button minWidth="100.0" mnemonicParsing="false" onAction="#onHozzadButtonClick" prefWidth="200.0" text="Hozzáadás" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+   </children>
+</GridPane>
