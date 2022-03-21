@@ -1,10 +1,14 @@
 package hu.petrik.etlap.controllers;
 
+import hu.petrik.etlap.EtlapDb;
+import hu.petrik.etlap.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class HozzadController {
+import java.sql.SQLException;
+
+public class HozzadController extends Controller {
     @FXML
     private TextField inputNev;
     @FXML
@@ -20,7 +24,7 @@ public class HozzadController {
         String nev = inputNev.getText().trim();
         String leiras = inputLeiras.getText().trim();
         int ar = 0;
-        String selectedKategoria  = inputKategoria.getSelectionModel().getSelectedItem();
+        String kategoria  = inputKategoria.getSelectionModel().getSelectedItem();
         if (nev.isEmpty()){
             alert("Név megadása kötelező");
             return;
@@ -43,17 +47,21 @@ public class HozzadController {
             alert("Az árnak 1-nél nagyobbnak kell lennie");
             return;
         }
-        if (selectedKategoria == ""){
+        if (kategoria == ""){
             alert("Kategória kiválasztása köztelező");
             return;
         }
-        System.out.println(ar);
-    }
 
-    private void alert(String uzenet) {
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setContentText(uzenet);
-        alert.getButtonTypes().add(ButtonType.OK);
-        alert.show();
+        try {
+            EtlapDb db = new EtlapDb();
+            int pass = db.etelHozzaadasa(nev, leiras, ar, kategoria);
+            if (pass == 1) {
+                alert("Étel hozzáadása sikeres");
+            } else {
+                alert("Étel hozzáadása sikertelen");
+            }
+        } catch (SQLException e) {
+            hibaKiir(e);
+        }
     }
 }

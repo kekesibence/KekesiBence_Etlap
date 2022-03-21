@@ -30,7 +30,7 @@
                                     <Insets />
                                 </HBox.margin>
                             </Label>
-                            <Button onAction="#szazalekOnClick" text="Emelés"></Button>
+                            <Button onAction="#szazalekOnClick" text="Emelés"/>
                         </children>
                         <VBox.margin>
                             <Insets bottom="20.0" />
@@ -43,8 +43,8 @@
                                     <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="50" initialValue="50" max="3000" min="50" />
                                 </valueFactory>
                             </Spinner>
-                            <Label text="Ft"></Label>
-                            <Button mnemonicParsing="false" onAction="#forintOnClick" text="Emelés"></Button>
+                            <Label text="Ft"/>
+                            <Button mnemonicParsing="false" onAction="#forintOnClick" text="Emelés"/>
                         </children>
                     </HBox>
                 </children>
@@ -56,6 +56,7 @@
          <TableColumn fx:id="nev" minWidth="50.0" prefWidth="250.0" text="Név" />
          <TableColumn fx:id="kategoria" minWidth="50.0" prefWidth="150.0" text="Kategória" />
          <TableColumn fx:id="ar" minWidth="50.0" prefWidth="100.0" text="Ár(Ft)" />
+         <TableColumn fx:id="leiras" minWidth="50.0" prefWidth="100.0" text="Leírás" />
      </columns>
    </TableView>
 </VBox>

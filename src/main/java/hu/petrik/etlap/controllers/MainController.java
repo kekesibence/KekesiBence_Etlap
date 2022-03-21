@@ -9,21 +9,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainController extends Controller {
-
+    @FXML
+    private Spinner<Integer> szazalekSpinner;
+    @FXML
+    private Spinner<Integer> forintSpinner;
     @FXML
     private TableView<Etlap> etlapTable;
     @FXML
@@ -32,12 +33,17 @@ public class MainController extends Controller {
     private TableColumn<Etlap, String> kategoria;
     @FXML
     private TableColumn<Etlap, Integer> ar;
+    @FXML
+    private TableColumn<Etlap, String> leiras;
+
     private EtlapDb db;
 
     public void initialize(){
         nev.setCellValueFactory(new PropertyValueFactory<>("nev"));
         kategoria.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
         ar.setCellValueFactory(new PropertyValueFactory<>("ar"));
+        leiras.setCellValueFactory(new PropertyValueFactory<>("leiras"));
+
         try {
             db = new EtlapDb();
             etlapListaFeltolt();
@@ -90,9 +96,97 @@ public class MainController extends Controller {
         }
     }
 
-    public void szazalekOnClick(ActionEvent actionEvent) {
+    public void forintOnClick(ActionEvent actionEvent) {
+        double emelendoOsszeg = forintSpinner.getValue();
+
+        if (etlapTable.getSelectionModel().getSelectedIndex() == -1) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Biztos szeretné növelni az összes étel árát?");
+            Optional<ButtonType> result = alert.showAndWait();
+            ButtonType resultType = result.orElse(ButtonType.CANCEL);
+
+            if (resultType == ButtonType.OK) {
+                try {
+                    if (new EtlapDb().novelesOsszes(emelendoOsszeg) == -1) {
+                        alert("Sikertelen növelés");
+                    } else {
+                        alert("Sikeres növelés");
+                    }
+                } catch (SQLException e) {
+                    hibaKiir(e);
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            String nev = etlapTable.getSelectionModel().getSelectedItem().getNev();
+            alert.setHeaderText("Biztos szeretné növelni a "+nev+" árát?");
+            Optional<ButtonType> result = alert.showAndWait();
+            ButtonType resultType = result.orElse(ButtonType.CANCEL);
+
+            if (resultType == ButtonType.OK) {
+                int id = etlapTable.getSelectionModel().getSelectedItem().getId();
+
+                try {
+                    if (new EtlapDb().noveles(emelendoOsszeg, id) == -1) {
+                        alert("Sikertelen növelés");
+                    } else {
+                        alert("Sikeres növelés");
+                    }
+                } catch (SQLException e) {
+                    hibaKiir(e);
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        etlapListaFeltolt();
     }
 
-    public void forintOnClick(ActionEvent actionEvent) {
+    public void szazalekOnClick(ActionEvent actionEvent) {
+        double emmelendoOsszeg = 1 + szazalekSpinner.getValue() / 100d;
+
+        if (etlapTable.getSelectionModel().getSelectedIndex() == -1) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Biztos szeretné növelni az összes étel árát?");
+            Optional<ButtonType> result = alert.showAndWait();
+            ButtonType resultType = result.orElse(ButtonType.CANCEL);
+
+            if (resultType == ButtonType.OK) {
+                try {
+                    if (new EtlapDb().novelesOsszes(emmelendoOsszeg) == -1) {
+                        alert("Sikertelen növelés");
+                    } else {
+                        alert("Sikeres növelés");
+                    }
+                } catch (SQLException e) {
+                    hibaKiir(e);
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            String name = etlapTable.getSelectionModel().getSelectedItem().getNev();
+            alert.setHeaderText("Biztos szeretné növelni a "+name+" árát?");
+            Optional<ButtonType> result = alert.showAndWait();
+            ButtonType resultType = result.orElse(ButtonType.CANCEL);
+
+            if (resultType == ButtonType.OK) {
+                int id = etlapTable.getSelectionModel().getSelectedItem().getId();
+
+                try {
+                    if (new EtlapDb().noveles(emmelendoOsszeg, id) == -1) {
+                        alert("Sikertelen növelés");
+                    } else {
+                        alert("Sikeres növelés");
+                    }
+                } catch (SQLException e) {
+                    hibaKiir(e);
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        etlapListaFeltolt();
     }
 }
